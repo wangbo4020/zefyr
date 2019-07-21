@@ -3,8 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:notus/notus.dart';
 import 'package:zefyr/util.dart';
 
@@ -286,7 +286,7 @@ class _ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
   }
 
   @override
-  // TODO: implement copyEnabled
+
   bool get copyEnabled => true;
 
   @override

@@ -19,9 +19,7 @@ dependencies:
   zefyr:
     path: ../
 
-dependency_overrides:
-  notus:
-    path: ../../notus
+  notus: ^0.1.3
 
 dev_dependencies:
   flutter_test:
