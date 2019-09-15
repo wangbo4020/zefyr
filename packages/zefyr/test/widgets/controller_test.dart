@@ -11,8 +11,8 @@ void main() {
     ZefyrController controller;
 
     setUp(() {
-      var doc = new NotusDocument();
-      controller = new ZefyrController(doc);
+      var doc = NotusDocument();
+      controller = ZefyrController(doc);
     });
 
     test('dispose', () {
@@ -25,9 +25,9 @@ void main() {
       controller.addListener(() {
         notified = true;
       });
-      controller.updateSelection(new TextSelection.collapsed(offset: 0));
+      controller.updateSelection(TextSelection.collapsed(offset: 0));
       expect(notified, isTrue);
-      expect(controller.selection, new TextSelection.collapsed(offset: 0));
+      expect(controller.selection, TextSelection.collapsed(offset: 0));
       expect(controller.lastChangeSource, ChangeSource.remote);
     });
 
@@ -36,12 +36,12 @@ void main() {
       controller.addListener(() {
         notified = true;
       });
-      var selection = new TextSelection.collapsed(offset: 5);
-      var change = new Delta()..insert('Words');
+      var selection = TextSelection.collapsed(offset: 5);
+      var change = Delta()..insert('Words');
       controller.compose(change, selection: selection);
       expect(notified, isTrue);
       expect(controller.selection, selection);
-      expect(controller.document.toDelta(), new Delta()..insert('Words\n'));
+      expect(controller.document.toDelta(), Delta()..insert('Words\n'));
       expect(controller.lastChangeSource, ChangeSource.remote);
     });
 
@@ -50,16 +50,15 @@ void main() {
       controller.addListener(() {
         notified = true;
       });
-      var selection = new TextSelection.collapsed(offset: 5);
-      var change = new Delta()..insert('Words');
+      var selection = TextSelection.collapsed(offset: 5);
+      var change = Delta()..insert('Words');
       controller.compose(change, selection: selection);
-      var change2 = new Delta()..insert('More ');
+      var change2 = Delta()..insert('More ');
       controller.compose(change2);
       expect(notified, isTrue);
-      var expectedSelection = new TextSelection.collapsed(offset: 10);
+      var expectedSelection = TextSelection.collapsed(offset: 10);
       expect(controller.selection, expectedSelection);
-      expect(
-          controller.document.toDelta(), new Delta()..insert('More Words\n'));
+      expect(controller.document.toDelta(), Delta()..insert('More Words\n'));
       expect(controller.lastChangeSource, ChangeSource.remote);
     });
 
@@ -68,11 +67,11 @@ void main() {
       controller.addListener(() {
         notified = true;
       });
-      var selection = new TextSelection.collapsed(offset: 5);
+      var selection = TextSelection.collapsed(offset: 5);
       controller.replaceText(0, 0, 'Words', selection: selection);
       expect(notified, isTrue);
       expect(controller.selection, selection);
-      expect(controller.document.toDelta(), new Delta()..insert('Words\n'));
+      expect(controller.document.toDelta(), Delta()..insert('Words\n'));
       expect(controller.lastChangeSource, ChangeSource.local);
     });
 
@@ -86,9 +85,7 @@ void main() {
       expect(notified, isTrue);
       expect(
         controller.document.toDelta(),
-        new Delta()
-          ..insert('Words', NotusAttribute.bold.toJson())
-          ..insert('\n'),
+        Delta()..insert('Words', NotusAttribute.bold.toJson())..insert('\n'),
       );
       expect(controller.lastChangeSource, ChangeSource.local);
     });
@@ -98,21 +95,19 @@ void main() {
       controller.addListener(() {
         notified = true;
       });
-      var selection = new TextSelection(baseOffset: 0, extentOffset: 5);
+      var selection = TextSelection(baseOffset: 0, extentOffset: 5);
       controller.replaceText(0, 0, 'Words', selection: selection);
       controller.formatSelection(NotusAttribute.bold);
       expect(notified, isTrue);
       expect(
         controller.document.toDelta(),
-        new Delta()
-          ..insert('Words', NotusAttribute.bold.toJson())
-          ..insert('\n'),
+        Delta()..insert('Words', NotusAttribute.bold.toJson())..insert('\n'),
       );
       expect(controller.lastChangeSource, ChangeSource.local);
     });
 
     test('getSelectionStyle', () {
-      var selection = new TextSelection.collapsed(offset: 3);
+      var selection = TextSelection.collapsed(offset: 3);
       controller.replaceText(0, 0, 'Words', selection: selection);
       controller.formatText(0, 5, NotusAttribute.bold);
       var result = controller.getSelectionStyle();
